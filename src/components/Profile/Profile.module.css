@@ -1,0 +1,19 @@
+.profileSection{
+    width: 90vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.profileImg{
+    width: 10rem;
+    height: 10rem;
+    margin: 10px;
+}
+
+.userInfoSection{
+    padding: 10px;
+}
+
+.userInfo{
+    margin:10px ;
+}
