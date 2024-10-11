@@ -52,6 +52,12 @@ const PollForm = (props) => {
               required
               placeholder={`Enter option ${index + 1}`}
             />
+            <button type='button' className={classes.remove} onClick={()=>{
+                const newOptions = options.filter((o,i)=>i !== index);
+                setOptions(newOptions)
+            }}>
+            remove
+          </button>
           </div>
         ))}
 

@@ -2,8 +2,8 @@ import React from "react";
 
 import PollForm from "../components/Polls/PollForm";
 
-const PollingPage = ()=>{
+const CreatePoll = ()=>{
     return (<PollForm/>)
 }
 
-export default PollingPage;
+export default CreatePoll;
