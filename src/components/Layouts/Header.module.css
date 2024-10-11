@@ -1,0 +1,10 @@
+.headers{
+    width:100vw;
+    position: fixed ;
+    z-index: 1000
+}
+
+.navLink{
+    text-decoration: none;
+    color:white
+}

@@ -1,7 +1,7 @@
 .poll{
     background-color: rgb(247, 215, 174);
     margin: 3px;
-    width: 60vw;
+    width: 60%;
     display: flex;
     justify-content: center;
 }

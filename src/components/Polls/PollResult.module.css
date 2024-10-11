@@ -1,0 +1,29 @@
+.section{
+    background-color: rgba(116, 113, 111, 0.5);
+    height: 50vh;
+    width: 50vw;
+    margin:20px;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.question{
+    background-color: rgb(112, 111, 109);
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px;
+    color:white
+}
+
+.options{
+    background-color: rgb(250, 224, 191);
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px;
+}

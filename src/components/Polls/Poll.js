@@ -6,7 +6,7 @@ const Poll = (props)=>{
     const navigate = useNavigate();
     const poll = props.poll;
     return (
-        <div onClick={()=>{navigate(`/poll/${poll._id}`)}} className={classes.poll}>
+        <div onClick={()=>{navigate(`${props.navigate}/${poll._id}`)}} className={classes.poll}>
             <h3>{poll.question}</h3>
         </div>
     )

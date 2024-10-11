@@ -1,13 +1,13 @@
 // src/components/Poll.js
 import React, { useState } from 'react';
-import { Container ,Row ,Col } from 'react-bootstrap';
+import { Container ,Row ,Col ,Button } from 'react-bootstrap';
 
-const Vote =({ poll })=> {
+const Vote =({ poll , id})=> {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleVote = () => {
     if (selectedOption !== null) {
-      console.log(poll._id, selectedOption);
+      console.log(poll._id, selectedOption ,id);
     }
   };
 
@@ -38,7 +38,7 @@ const Vote =({ poll })=> {
             </Row>
             <Row>
                 <Col>
-                    <button onClick={handleVote} disabled={selectedOption === null}>Vote</button>
+                    <Button onClick={handleVote} disabled={selectedOption === null}>Vote</Button>
                 </Col>
             </Row>
         </div>
