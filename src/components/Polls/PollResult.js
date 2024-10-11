@@ -1,15 +1,40 @@
-import React from "react";
+import React ,{useEffect ,useState} from "react";
 import { Container ,Row } from "react-bootstrap";
 
 import Options from "./Options";
 import CommentsSection from "../Comments/CommentsSection";
+import Loader from "../Layouts/Loader";
+import useApi from "../../service/api";
+
+import { useParams } from "react-router-dom";
 
 import classes from "./PollResult.module.css";
 
-const PollResults =()=> {
-    const poll = {votes :[1 ,3,7] ,question:"what is my name" , options:["yash" , "nikhil" ,"kajal"]};
+const PollResults =(props)=> {
+    const {pollId} = useParams()
+    const api = useApi();
+    const pollObj = {votes:[] ,options:[]}
+    const [poll ,setPoll] = useState(pollObj)
+    const [isLoading ,setIsLoading] = useState(false);
     const totalVotes = poll.votes.reduce((sum, voteCount) => sum + voteCount, 0);
-  
+    useEffect(()=>{
+      setIsLoading(true)
+      const apiCall = async()=>{
+        try {
+          const response = await api.get(`/api/poll/${pollId}`);
+          const pollData = response.data.poll;
+          console.log(response.data)
+          setPoll(pollData);
+          setIsLoading(false)
+        } catch (err) {
+          setIsLoading(false)
+        }
+      }
+      apiCall();
+    } ,[])
+    
+    if(isLoading)return <Loader/>
+
     return (
       <React.Fragment>
       <Container className="center">
@@ -26,7 +51,7 @@ const PollResults =()=> {
       </Container>
       <Container className="center">
         <Row>
-          <CommentsSection/>
+          <CommentsSection pollId={pollId}/>
         </Row>
       </Container>
       </React.Fragment>

@@ -4,8 +4,20 @@ import classes from "./Header.module.css"
 import {Container, Navbar ,Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
+import {useAuth} from "../Auth/AuthContext";
+
 
 const Header = (props)=>{
+    const {isAuthenticated} = useAuth()
+
+    let navElements = <>
+                <NavLink to="/profile" className={classes.navLink}>Profile</NavLink>
+                <NavLink to="/polls/create" className={classes.navLink}>Create Poll</NavLink>
+                <NavLink to="/" className={classes.navLink}>polls</NavLink>
+    </>
+
+    if(!isAuthenticated)navElements =<NavLink to="/auth" className={classes.navLink}>Login</NavLink>
+    
     return (<header className={classes.header}>
         <Navbar bg="dark" variant="dark" style={{height:"15vh" }}>
             <Container>
@@ -13,9 +25,7 @@ const Header = (props)=>{
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav"/>
                 <Nav className="me-auto justify-content-around" style={{width:"20vw"}}>
-                    <NavLink to="/profile" className={classes.navLink}>Profile</NavLink>
-                    <NavLink to="/polls/create" className={classes.navLink}>Create Poll</NavLink>
-                    <NavLink to="/" className={classes.navLink}>polls</NavLink>
+                    {navElements}
                 </Nav>
             </Container>
         </Navbar>

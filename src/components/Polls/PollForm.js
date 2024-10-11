@@ -2,21 +2,32 @@ import React, { useState } from 'react';
 
 import classes from "./PollForm.module.css";
 
+import useApi from '../../service/api';
+
 const PollForm = (props) => {
+  const api = useApi();
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '']); 
+  const [isLoading , setIsLoading] = useState(false)
 
   const addOptionHandler = () => {
     setOptions([...options, '']); 
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async(e) => {
     e.preventDefault();
     if (question && options.length >= 2 && options.every(option => option.trim())) {
-    console.log(question, options);
-    
-      setQuestion(''); 
-      setOptions(['', '']); 
+    setIsLoading(true)
+      try {
+        await api.post("/api/poll",{question , options})
+        setQuestion(''); 
+        setOptions(['', '']); 
+      } catch (err) {
+        alert(err.response.data.message)
+      }
+      finally{
+        setIsLoading(false)
+      }
     }
   };
 
@@ -67,9 +78,12 @@ const PollForm = (props) => {
           </button>
         </div>
 
-        <div className={classes.actions}>
+        {!isLoading &&<div className={classes.actions}>
           <button type='submit'>Create Poll</button>
-        </div>
+        </div>}
+        {isLoading && <p>
+          loading...!
+          </p>}
       </form>
     </section>
   );
