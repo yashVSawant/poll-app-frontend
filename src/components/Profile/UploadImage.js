@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import host from '../../store/host';
+import useApi from '../../service/api';
 
 const UploadImage = (props) => {
+  const api = useApi()
   const [image, setImage] = useState(null);
 
   const imageChangeHandler = (e) => {
@@ -16,9 +16,8 @@ const UploadImage = (props) => {
     formData.append('file', image);
 
     try {
-      const token = localStorage.getItem('token')
-      const response = await axios.post(`${host}/user/api/data/photo`, formData, {
-        headers: {'Authorization':token,
+      const response = await api.post('/api/user/data/photo', formData, {
+        headers: {
           'Content-Type': 'multipart/form-data',
         },
       });

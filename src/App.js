@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router ,Routes ,Route } from 'react-router-dom';
 
 import { AuthProvider } from './components/Auth/AuthContext';
+import { SocketProvider } from './sockets/SocketContext';
 import ProtectedRoute from "./components/Auth/ProtectedRoute"
 import Header from './components/Layouts/Header';
 import AuthPage from './pages/AuthPage';
@@ -15,6 +16,7 @@ import PollResultPage from './pages/PollResultPage';
 function App() {
   return (
     <AuthProvider>
+      <SocketProvider>
       <Router>
         <Header/>
         <Routes>
@@ -26,6 +28,7 @@ function App() {
           <Route path="/polls/result/:pollId" element={<ProtectedRoute element={<PollResultPage/>}/>}/>
         </Routes>
       </Router>
+      </SocketProvider>
     </AuthProvider>
   );
 }

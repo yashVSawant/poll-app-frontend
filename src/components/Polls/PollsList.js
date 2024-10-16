@@ -33,7 +33,7 @@ const PollsList = ()=>{
     return (<Container className="center">
         <Row>
             <Col style={{width:"90vw"}}>
-                {polls.map((p)=>{return <Poll poll={p} navigate="polls/vote" />})}
+                {polls.map((p)=>{return <Poll key={p._id} poll={p} navigate="polls/vote" />})}
             </Col>
         </Row>
         

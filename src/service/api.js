@@ -5,8 +5,7 @@ const useApi = () => {
   const { token } = useAuth(); 
 
   const api = axios.create({
-    baseURL: 'http://localhost:3000',
-    timeout: 5000,
+    baseURL: 'https://polling-app-backend.vercel.app',
     headers: {
       'Content-Type': 'application/json',
     },

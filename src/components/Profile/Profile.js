@@ -28,6 +28,7 @@ const Profile = ()=>{
                 setVotedPolls(voted);
             } catch (err) {
                 setIsLoading(false)
+                console.log(err)
             }
         }
         apiCall()
@@ -47,11 +48,11 @@ const Profile = ()=>{
                 <Row style={{width:"80vw"}}>
                     <Col>
                         <h3>Created Polls</h3>
-                        {createdPolls.map((p)=>{return <Poll poll={p} navigate="/polls/result"/>})}
+                        {createdPolls.map((p)=>{return <Poll key={"created"+p._id} poll={p} navigate="/polls/result"/>})}
                     </Col>
                     <Col>
                         <h3>Voted Polls</h3>
-                        {votedPolls.map((p)=>{return <Poll poll={p} navigate="/polls/result"/>})}
+                        {votedPolls.map((p)=>{return <Poll key={"voted"+p._id} poll={p} navigate="/polls/result"/>})}
                     </Col>
                 </Row>
             </div>

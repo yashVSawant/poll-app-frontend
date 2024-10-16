@@ -28,9 +28,8 @@ const AuthForm = () => {
     try {
       if(isLogin){
         const responseData = await api.post("/api/auth/login",{email:user.email ,password:user.password});
-        console.log(responseData);
-        const token = responseData.data.token;
-        login(token);
+        const {token} = responseData.data;
+        login( token);
         navigate("/")
       }else{
         await api.post("/api/auth/register",{...user});

@@ -5,17 +5,20 @@ import Options from "./Options";
 import CommentsSection from "../Comments/CommentsSection";
 import Loader from "../Layouts/Loader";
 import useApi from "../../service/api";
+import {useSocket} from "../../sockets/SocketContext"
 
 import { useParams } from "react-router-dom";
 
 import classes from "./PollResult.module.css";
 
 const PollResults =(props)=> {
+    const socket = useSocket()
     const {pollId} = useParams()
     const api = useApi();
     const pollObj = {votes:[] ,options:[]}
     const [poll ,setPoll] = useState(pollObj)
     const [isLoading ,setIsLoading] = useState(false);
+    const [error ,setError] = useState(null);
     const totalVotes = poll.votes.reduce((sum, voteCount) => sum + voteCount, 0);
     useEffect(()=>{
       setIsLoading(true)
@@ -27,13 +30,20 @@ const PollResults =(props)=> {
           setPoll(pollData);
           setIsLoading(false)
         } catch (err) {
-          setIsLoading(false)
+          setIsLoading(false);
+          setError("Oops!, Something went wrong")
         }
       }
       apiCall();
+      if(socket){
+        socket.emit("join-poll",pollId);
+        socket.on("joined",()=>{
+        })
+    }
     } ,[])
     
     if(isLoading)return <Loader/>
+    if(error)return <p>{error}</p>
 
     return (
       <React.Fragment>

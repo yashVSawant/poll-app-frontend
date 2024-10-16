@@ -13,13 +13,13 @@ export function AuthProvider({ children }) {
 
   const login = (getToken) => {
     const bearerToken = `Bearer ${getToken}`
-    localStorage.setItem('GameToken',bearerToken)
+    localStorage.setItem('GameToken',bearerToken);
     setToken(bearerToken);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    setToken('')
+    setToken('');
     setIsAuthenticated(false);
   };
 

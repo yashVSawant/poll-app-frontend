@@ -1,19 +1,20 @@
 import React from "react";
 import classes from "./Header.module.css"
 
-import {Container, Navbar ,Nav } from "react-bootstrap";
+import {Container, Navbar ,Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 import {useAuth} from "../Auth/AuthContext";
 
 
 const Header = (props)=>{
-    const {isAuthenticated} = useAuth()
+    const {isAuthenticated ,logout} = useAuth()
 
     let navElements = <>
                 <NavLink to="/profile" className={classes.navLink}>Profile</NavLink>
-                <NavLink to="/polls/create" className={classes.navLink}>Create Poll</NavLink>
                 <NavLink to="/" className={classes.navLink}>polls</NavLink>
+                <NavLink to="/polls/create" className={classes.navLink}>Create Poll</NavLink>
+                <Button onClick={()=>{logout()}} className={classes.navLink}>logout</Button>
     </>
 
     if(!isAuthenticated)navElements =<NavLink to="/auth" className={classes.navLink}>Login</NavLink>

@@ -3,11 +3,13 @@ import React, { useState ,useEffect} from 'react';
 import useApi from '../../service/api';
 import Loader from '../Layouts/Loader';
 
+import Comment from './Comment';
+import classes from "./Comment.module.css"
+
 const CommentsSection = (props) => {
-  const api = useApi()
+  const api = useApi();
   const [newComment, setNewComment] = useState('');
-  const [comments ,setComments] = useState([])
-  const [reply, setReply] = useState({});
+  const [comments ,setComments] = useState([]);
   const [isLoading ,setIsLoading] = useState(false)
 
   useEffect(()=>{
@@ -28,19 +30,12 @@ const CommentsSection = (props) => {
 
   const addCommentHandler = async()=>{
     try {
-      await api.post(`/api/comment/${props.pollId}` ,{text:newComment});
-      setNewComment('')
+      const response = await api.post(`/api/comment/${props.pollId}` ,{text:newComment});
+      const postedComment = response.data.comment;
+      setComments([...comments ,postedComment]);
+      setNewComment('');
     } catch (err) {
       console.log(err)
-      alert('something went wrong!')
-    }
-  }
-  const addReplyHandler = async()=>{
-    try {
-      await api.post(`/api/comment/reply${props.pollId}`,{text:reply});
-      setNewComment('');
-      setComments([...comments])
-    } catch (err) {
       alert('something went wrong!')
     }
   }
@@ -48,31 +43,15 @@ const CommentsSection = (props) => {
   if(isLoading)return<Loader/>
 
   return (
-    <div className="comments-section">
+    <div className={classes["comment-section"]}>
       <h3>Comments</h3>
       <div>
-        {comments.map(comment => (
-          <div key={comment._id} className="comment">
-            <p><strong>{comment.userId.name}</strong>: {comment.text}</p>
-            {comment.replies.map(reply => (
-              <div key={reply._id} className="reply">
-                <p><strong>{reply.userId.name}</strong>: {reply.text}</p>
-              </div>
-            ))}
-            <div className="reply-box">
-              <input
-                type="text"
-                value={reply[comment._id] || ''}
-                onChange={(e) => setReply({ ...reply, [comment._id]: e.target.value })}
-                placeholder="Reply to this comment"
-              />
-              <button onClick={addReplyHandler}>Reply</button>
-            </div>
-          </div>
+        {comments.map(c => (
+          <Comment key={c._id} comment={c}/>
         ))}
       </div>
       
-      <div className="add-comment">
+      <div>
         <input
           type="text"
           value={newComment}
